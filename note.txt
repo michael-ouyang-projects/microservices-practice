@@ -1,0 +1,10 @@
+localhost:7001/product/1
+localhost:7002/reviews?productId=1
+localhost:7003/recommendations?productId=1
+
+localhost:7000/product-composite/1
+
+
+Runtime.getRuntime().availableProcessors();
+java -XX:+PrintFlagsFinal -version | FindStr MaxHeapSize
+java -Xmx8g
