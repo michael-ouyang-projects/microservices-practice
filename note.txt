@@ -8,3 +8,4 @@ localhost:7000/product-composite/1
 Runtime.getRuntime().availableProcessors();
 java -XX:+PrintFlagsFinal -version | FindStr MaxHeapSize
 java -Xmx8g
+-Dspring.profiles.active=dockerjps
