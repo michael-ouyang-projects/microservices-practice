@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import tw.ouyang.utils.http.ServiceUtil;
 import tw.ouyang.utils.model.Product;
 import tw.ouyang.utils.model.Recommendation;
 import tw.ouyang.utils.model.Review;
 
+@Api("Product-Composite REST API")
 @RestController
 public class ProductCompositeController {
 
@@ -22,6 +25,7 @@ public class ProductCompositeController {
     @Autowired
     private ProductCompositeIntegration productCompositeIntegration;
 
+    @ApiOperation("Fetch product's information by id.")
     @GetMapping("/product-composite/{productId}")
     public ProductAggregate getProductAggregate(@PathVariable int productId) {
         Product product = productCompositeIntegration.getProduct(productId);
