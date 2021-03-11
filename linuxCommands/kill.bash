@@ -1,2 +1,2 @@
 #!/bin/bash
-kill -9 $(jps | grep .jar | awk '{print $1}')
+kill -9 $(jps | grep SNAPSHOT.jar | awk '{print $1}')
