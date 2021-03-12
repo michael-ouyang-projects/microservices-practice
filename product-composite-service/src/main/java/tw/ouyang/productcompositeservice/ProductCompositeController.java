@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import reactor.core.publisher.Mono;
 import tw.ouyang.utils.http.ServiceUtil;
 import tw.ouyang.utils.model.Product;
 import tw.ouyang.utils.model.Recommendation;
@@ -25,13 +26,15 @@ public class ProductCompositeController {
     @Autowired
     private ProductCompositeIntegration productCompositeIntegration;
 
+    @SuppressWarnings("unchecked")
     @ApiOperation("Fetch product's information by id.")
     @GetMapping("/product-composite/{productId}")
-    public ProductAggregate getProductAggregate(@PathVariable int productId) {
-        Product product = productCompositeIntegration.getProduct(productId);
-        List<Review> reviews = productCompositeIntegration.getReviews(productId);
-        List<Recommendation> recommendations = productCompositeIntegration.getRecommendations(productId);
-        return createProductAggregate(product, reviews, recommendations);
+    public Mono<ProductAggregate> getProductAggregate(@PathVariable int productId) {
+        return Mono.zip(
+                values -> createProductAggregate((Product) values[0], (List<Review>) values[1], (List<Recommendation>) values[2]),
+                productCompositeIntegration.getProduct(productId),
+                productCompositeIntegration.getReviews(productId).collectList(),
+                productCompositeIntegration.getRecommendations(productId).collectList());
     }
 
     private ProductAggregate createProductAggregate(Product product, List<Review> reviews, List<Recommendation> recommendations) {
