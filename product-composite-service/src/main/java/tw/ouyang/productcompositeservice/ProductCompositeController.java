@@ -38,6 +38,10 @@ public class ProductCompositeController {
     }
 
     private ProductAggregate createProductAggregate(Product product, List<Review> reviews, List<Recommendation> recommendations) {
+        System.out.println(product.getName());
+        System.out.println(reviews.size());
+        System.out.println(recommendations.size());
+        
         List<ReviewSummary> reviewSummaries = reviews.stream()
                 .map(review -> new ReviewSummary(review.getReviewId(), review.getAuthor(), review.getSubject(), review.getContent()))
                 .collect(Collectors.toList());
